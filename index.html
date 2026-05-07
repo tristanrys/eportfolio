@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Academic e-Portfolio" />
+  <title>e-Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- ── NAVIGATION ── -->
+  <nav>
+    <a class="nav-brand" href="#" id="navBrand">e-Portfolio</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks"></ul>
+  </nav>
+
+  <!-- ── APP ROOT ── -->
+  <div id="app">
+
+    <!-- HOME PAGE -->
+    <div class="page" id="page-home">
+      <!-- Hero (filled by JS) -->
+      <section class="hero" id="hero"></section>
+
+      <!-- Subjects grid -->
+      <div class="home-content">
+        <p class="section-eyebrow">Subjects</p>
+        <h2 class="section-title">My Coursework</h2>
+        <p class="section-sub">Select a subject to explore its artifacts and write-ups.</p>
+        <div class="subjects-grid" id="subjectsGrid"></div>
+      </div>
+    </div>
+
+    <!-- Subject pages injected here by JS -->
+
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <strong id="footerName"></strong> · Academic e-Portfolio
+    <script>
+      // tiny inline — sets footer name before JS loads
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("footerName").textContent = PORTFOLIO.owner.name;
+      });
+    </script>
+  </footer>
+
+  <!-- Data must load before main -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
