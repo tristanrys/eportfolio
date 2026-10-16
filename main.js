@@ -33,6 +33,12 @@ function buildNav() {
     ul.appendChild(li);
   });
 
+  if (PORTFOLIO.profile) {
+    const li = document.createElement("li");
+    li.innerHTML = `<a href="#" data-page="resume">Resume</a>`;
+    ul.appendChild(li);
+  }
+
   ul.querySelectorAll("a").forEach(a => {
     a.addEventListener("click", e => {
       e.preventDefault();
@@ -56,6 +62,16 @@ function buildHome() {
        </div>
        <p class="photo-hint">Replace with your photo in data.js</p>`;
 
+  const statusBadge = o.status ? `<span class="badge badge-status">${o.status}</span>` : "";
+
+  const actions = PORTFOLIO.profile
+    ? `<div class="hero-actions">
+        <button class="btn btn-primary" onclick="navigate('resume')">View resume</button>
+        ${o.resume ? `<a class="btn btn-ghost" href="${o.resume}" target="_blank" rel="noopener">Download PDF</a>` : ""}
+        ${o.email ? `<a class="btn btn-ghost" href="mailto:${o.email}">Email me</a>` : ""}
+      </div>`
+    : "";
+
   hero.innerHTML = `
     <div class="hero-inner">
       <div class="hero-photo-wrap">${photoHtml}</div>
@@ -65,12 +81,14 @@ function buildHome() {
         <p class="hero-program">${o.program} &nbsp;·&nbsp; ${o.school}</p>
         <p class="hero-bio">${o.bio}</p>
         <div class="hero-badges">
+          ${statusBadge}
           ${PORTFOLIO.subjects.map(s =>
             `<span class="badge" onclick="navigate('${s.id}')" style="cursor:pointer">
               ${s.code} – ${s.title}
             </span>`
           ).join("")}
         </div>
+        ${actions}
       </div>
     </div>`;
 
@@ -91,6 +109,19 @@ function buildHome() {
     card.addEventListener("click", e => { e.preventDefault(); navigate(sub.id); });
     grid.appendChild(card);
   });
+
+  // Highlights strip (resume summary)
+  if (PORTFOLIO.profile) {
+    const p = PORTFOLIO.profile;
+    const strip = document.getElementById("highlights");
+    if (strip) {
+      strip.innerHTML = `
+        <div class="highlight"><span class="highlight-num">${p.projects.length}</span><span class="highlight-label">Projects</span></div>
+        <div class="highlight"><span class="highlight-num">${p.certifications.length}</span><span class="highlight-label">Certifications</span></div>
+        <div class="highlight"><span class="highlight-num">${PORTFOLIO.subjects.length}</span><span class="highlight-label">Subjects documented</span></div>
+        <div class="highlight"><span class="highlight-num">2027</span><span class="highlight-label">Expected graduation</span></div>`;
+    }
+  }
 }
 
 // ── BUILD ARTIFACT CARD ───────────────────────────────────────
@@ -194,6 +225,105 @@ function buildSubjectPages() {
   });
 }
 
+// ── BUILD RESUME PAGE ─────────────────────────────────────────
+function buildResumePage() {
+  const p = PORTFOLIO.profile;
+  if (!p) return;
+  const o = PORTFOLIO.owner;
+  const app = document.getElementById("app");
+
+  const page = document.createElement("div");
+  page.className = "page";
+  page.id = "page-resume";
+
+  const subjectTitle = id => {
+    const s = PORTFOLIO.subjects.find(x => x.id === id);
+    return s ? s.title : "";
+  };
+
+  const education = p.education.map(e => `
+    <div class="resume-row">
+      <div>
+        <div class="resume-row-title">${e.degree}</div>
+        <div class="resume-row-sub">${e.school}${e.note ? ` &nbsp;|&nbsp; ${e.note}` : ""}</div>
+      </div>
+      <div class="resume-row-date">${e.date}</div>
+    </div>`).join("");
+
+  const projects = p.projects.map(pr => `
+    <article class="project-card">
+      <header class="project-head">
+        <h3 class="project-title">${pr.title}</h3>
+        <span class="project-context">${pr.context}</span>
+      </header>
+      <ul class="project-bullets">
+        ${pr.bullets.map(b => `<li>${b}</li>`).join("")}
+      </ul>
+      ${pr.tools && pr.tools.length
+        ? `<div class="so-tags">${pr.tools.map(t => `<span class="so-tag">${t}</span>`).join("")}</div>`
+        : ""}
+      ${pr.linkSubject
+        ? `<a href="#" class="project-link" data-go="${pr.linkSubject}">See artifacts in ${subjectTitle(pr.linkSubject)} →</a>`
+        : ""}
+    </article>`).join("");
+
+  const certs = p.certifications.map(c => `
+    <div class="cert-card">
+      <div class="cert-date">${c.date}</div>
+      <div class="cert-name">${c.name}</div>
+      <div class="cert-issuer">${c.issuer}${c.hours ? ` · ${c.hours}` : ""}</div>
+    </div>`).join("");
+
+  const skills = p.skills.map(g => `
+    <div class="skill-group">
+      <div class="skill-group-name">${g.group}</div>
+      <div class="so-tags">${g.items.map(i => `<span class="so-tag">${i}</span>`).join("")}</div>
+    </div>`).join("");
+
+  page.innerHTML = `
+    <div class="subject-header">
+      <p class="subject-code">Resume</p>
+      <h1 class="subject-title">${o.name}</h1>
+      <p class="subject-desc">${o.headline || o.program}</p>
+      <div class="resume-actions">
+        ${o.resume ? `<a class="btn btn-primary" href="${o.resume}" target="_blank" rel="noopener">Download resume (PDF)</a>` : ""}
+        ${o.email ? `<a class="btn btn-ghost" href="mailto:${o.email}">${o.email}</a>` : ""}
+      </div>
+    </div>
+    <div class="subject-content resume-content">
+      <section class="resume-section">
+        <h2 class="resume-heading">Objective</h2>
+        <p class="resume-objective">${p.objective}</p>
+      </section>
+
+      <section class="resume-section">
+        <h2 class="resume-heading">Education</h2>
+        ${education}
+      </section>
+
+      <section class="resume-section">
+        <h2 class="resume-heading">Projects</h2>
+        <div class="project-list">${projects}</div>
+      </section>
+
+      <section class="resume-section">
+        <h2 class="resume-heading">Certifications</h2>
+        <div class="cert-grid">${certs}</div>
+      </section>
+
+      <section class="resume-section">
+        <h2 class="resume-heading">Technical skills</h2>
+        <div class="skill-groups">${skills}</div>
+      </section>
+    </div>`;
+
+  app.appendChild(page);
+
+  page.querySelectorAll("[data-go]").forEach(a => {
+    a.addEventListener("click", e => { e.preventDefault(); navigate(a.dataset.go); });
+  });
+}
+
 // ── TOGGLE HELPERS ────────────────────────────────────────────
 function toggleCard(header) {
   const card = header.closest(".artifact-card");
@@ -225,9 +355,12 @@ function initBrand() {
 
 // ── INIT ──────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
+  document.title = `${PORTFOLIO.owner.name} | e-Portfolio`;
+  document.getElementById("footerName").textContent = PORTFOLIO.owner.name;
   buildNav();
   buildHome();
   buildSubjectPages();
+  buildResumePage();
   initMobileMenu();
   initBrand();
   navigate("home");
