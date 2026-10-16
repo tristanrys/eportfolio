@@ -625,3 +625,194 @@ footer strong { color: var(--gold-light); }
 
   nav { position: relative; }
 }
+
+/* ============================================================
+   RESUME ADDITIONS (same palette, fonts and card language)
+   ============================================================ */
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--gold);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn:focus-visible, .project-link:focus-visible, .nav-links a:focus-visible,
+.writeup-tab:focus-visible, .artifact-card-header:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 2px;
+}
+.btn-primary { background: var(--gold); color: var(--navy); }
+.btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); }
+.btn-ghost { background: transparent; color: var(--gold-light); border-color: rgba(200,168,75,0.45); }
+.btn-ghost:hover { background: rgba(200,168,75,0.12); border-color: var(--gold); }
+
+.hero-actions, .resume-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+.resume-actions { justify-content: center; margin-top: 1.5rem; }
+
+.badge-status {
+  background: var(--gold);
+  color: var(--navy);
+  border-color: var(--gold);
+  font-weight: 600;
+}
+
+/* Home highlights */
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-light);
+}
+.highlight { display: flex; flex-direction: column; gap: 0.15rem; }
+.highlight-num {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.1;
+}
+.highlight-label { font-size: 0.82rem; color: var(--text-muted); }
+
+/* Resume page */
+.resume-section { margin-bottom: 3rem; }
+.resume-section:last-child { margin-bottom: 0; }
+
+.resume-heading {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid var(--gold);
+}
+
+.resume-objective {
+  font-size: 1rem;
+  color: var(--text-mid);
+  line-height: 1.85;
+  max-width: 72ch;
+}
+
+.resume-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.4rem;
+}
+.resume-row-title { font-weight: 600; font-size: 1.02rem; }
+.resume-row-sub { font-size: 0.9rem; color: var(--text-muted); }
+.resume-row-date { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); align-self: center; }
+
+/* Projects */
+.project-list { display: grid; gap: 1.25rem; }
+
+.project-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.35rem 1.5rem;
+  transition: box-shadow 0.2s;
+}
+.project-card:hover { box-shadow: var(--shadow-md); }
+
+.project-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.7rem;
+}
+.project-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.project-context {
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  color: #7a5e1a;
+  background: var(--gold-pale);
+  padding: 0.2rem 0.65rem;
+  border-radius: 100px;
+}
+.project-bullets {
+  margin: 0 0 0.9rem 1.15rem;
+  color: var(--text-mid);
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+.project-bullets li { margin-bottom: 0.35rem; }
+.project-link {
+  display: inline-block;
+  margin-top: 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+.project-link:hover { text-decoration: underline; }
+
+/* Certifications */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 1rem;
+}
+.cert-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.25rem;
+}
+.cert-date {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+.cert-name { font-weight: 600; line-height: 1.4; margin-bottom: 0.3rem; }
+.cert-issuer { font-size: 0.85rem; color: var(--text-muted); }
+
+/* Skills */
+.skill-groups { display: grid; gap: 1rem; }
+.skill-group {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 0.5rem 1rem;
+  align-items: start;
+}
+.skill-group-name { font-weight: 600; font-size: 0.92rem; padding-top: 0.25rem; }
+.skill-group .so-tags { margin-top: 0; }
+
+@media (max-width: 700px) {
+  .skill-group { grid-template-columns: 1fr; }
+  .resume-row-date { align-self: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page { animation: none; }
+  html { scroll-behavior: auto; }
+}
