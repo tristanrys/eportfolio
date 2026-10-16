@@ -34,6 +34,8 @@
         <h2 class="section-title">My Coursework</h2>
         <p class="section-sub">Select a subject to explore its artifacts and write-ups.</p>
         <div class="subjects-grid" id="subjectsGrid"></div>
+
+        <div class="highlights" id="highlights"></div>
       </div>
     </div>
 
@@ -44,12 +46,6 @@
   <!-- ── FOOTER ── -->
   <footer>
     <strong id="footerName"></strong> · Academic e-Portfolio
-    <script>
-      // tiny inline — sets footer name before JS loads
-      document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("footerName").textContent = PORTFOLIO.owner.name;
-      });
-    </script>
   </footer>
 
   <!-- Data must load before main -->
