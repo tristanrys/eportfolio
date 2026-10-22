@@ -13,9 +13,10 @@ const PORTFOLIO = {
     headline: "Final-year Computer Engineering student · Dean's Lister",
     email: "karlt375@gmail.com",
     schoolEmail: "tristankarl.reyes@my.jru.edu",
+    phone: "09615791898",
     resume: "Tristan_Karl_Reyes_Resume.pdf",
     status: "Seeking an OJT opportunity",
-    photo: "tristan.jpg",
+    photo: "assets/img/tristankarl.jpg",
   },
 
   subjects: [
@@ -248,12 +249,15 @@ const PORTFOLIO = {
     objective: "Final-year Computer Engineering student at Jose Rizal University and Dean's Lister, with hands-on experience in machine learning, web development, and database design, backed by AWS Academy and CompTIA certifications. Seeking an OJT opportunity in software development, data, or IT systems where I can apply my technical skills and learn from experienced engineers.",
 
     education: [
-      {
-        degree: "Bachelor of Science in Computer Engineering",
-        school: "Jose Rizal University",
-        note: "Dean's Lister",
-        date: "Expected graduation: 2027"
-      }
+      { degree: "Bachelor of Science in Computer Engineering", school: "Jose Rizal University", detail: "Expected graduation: 2027", period: "2023 – Present" },
+      { degree: "Senior High School", school: "Pateros Catholic School", detail: "", period: "2021 – 2023" },
+      { degree: "Junior High School", school: "Pateros Catholic School", detail: "", period: "2017 – 2021" },
+      { degree: "Elementary", school: "Pateros Elementary School", detail: "", period: "2011 – 2017" }
+    ],
+
+    achievements: [
+      "Dean's Lister, First Semester, A.Y. 2025–2026 (Jose Rizal University)",
+      "Dean's Lister, Second Semester, A.Y. 2025–2026 (Jose Rizal University)"
     ],
 
     // linkSubject: id of a subject above, adds a "View artifacts" link
@@ -293,22 +297,29 @@ const PORTFOLIO = {
         context: "Software Design Project",
         bullets: [
           "Co-developed a web portal with a 4-person team to replace the paper-based equipment borrowing process in the university's computer laboratory, with separate borrower and custodian views.",
-          "Borrowers sign in with Google, check item availability, submit borrow requests, and track their history; custodians approve or reject requests and manage inventory from a dashboard."
+          "Borrowers sign in with Google, check item availability, submit borrow requests, and track their history; custodians approve or reject requests and manage inventory from a dashboard.",
+          "Produced the full design package (needs and requirements analysis, flowchart, database schema, wireframes) and a working app built with Python (Flask), Google OAuth, and Supabase."
         ],
-        tools: []
+        tools: ["Python (Flask)", "Google OAuth", "Supabase"]
       }
     ],
 
     certifications: [
-      { name: "CompTIA Tech+", issuer: "CompTIA", date: "September 2025", hours: null },
-      { name: "Relational Database Developer Certification", issuer: "freeCodeCamp", date: "November 2025", hours: "approx. 300 hours" },
+      { name: "Introduction to AI Literacy and Responsible Use", issuer: "CHED ACHIEVE Micro-credential with Mapúa University", date: "September 2026", hours: null },
+      { name: "Effective Speaking and Listening Skills (US English)", issuer: "Wadhwani Foundation Microcertificate", date: "August 2026", hours: "75 hours" },
+      { name: "Certificate of Content Completion", issuer: "Ignite Philippines, Wadhwani Foundation", date: "April 2026", hours: "42 hours" },
       { name: "AWS Academy Graduate: Machine Learning Foundations", issuer: "AWS Academy", date: "April 2026", hours: "20 hours" },
       { name: "Overview of AI, Certificate of Completion", issuer: "Huawei ICT Academy", date: "March 2026", hours: null },
-      { name: "Certificate of Content Completion", issuer: "Ignite Philippines, Wadhwani Foundation", date: "April 2026", hours: "42 hours" }
+      { name: "Relational Database Developer Certification", issuer: "freeCodeCamp", date: "November 2025", hours: "approx. 300 hours" },
+      { name: "CompTIA Tech+", issuer: "CompTIA", date: "September 2025", hours: null }
+    ],
+
+    seminars: [
+      { name: "3D Printing Workshop", date: "September 15, 2026" }
     ],
 
     skills: [
-      { group: "Languages", items: ["Python", "C++", "JavaScript", "HTML", "CSS", "SQL"] },
+      { group: "Languages", items: ["Python", "JavaScript", "HTML", "CSS", "SQL"] },
       { group: "Databases", items: ["MySQL", "Supabase"] },
       { group: "Libraries and tools", items: ["scikit-learn", "TensorFlow/Keras", "Flask", "Google Colab"] },
       { group: "Concepts", items: ["Machine learning", "Deep learning", "Image classification", "Relational database design"] }
