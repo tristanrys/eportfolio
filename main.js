@@ -27,17 +27,17 @@ function buildNav() {
   homeItem.innerHTML = `<a href="#" data-page="home">Home</a>`;
   ul.appendChild(homeItem);
 
-  PORTFOLIO.subjects.forEach(sub => {
-    const li = document.createElement("li");
-    li.innerHTML = `<a href="#" data-page="${sub.id}">${sub.title}</a>`;
-    ul.appendChild(li);
-  });
-
   if (PORTFOLIO.profile) {
     const li = document.createElement("li");
     li.innerHTML = `<a href="#" data-page="resume">Resume</a>`;
     ul.appendChild(li);
   }
+
+  PORTFOLIO.subjects.forEach(sub => {
+    const li = document.createElement("li");
+    li.innerHTML = `<a href="#" data-page="${sub.id}">${sub.title}</a>`;
+    ul.appendChild(li);
+  });
 
   ul.querySelectorAll("a").forEach(a => {
     a.addEventListener("click", e => {
@@ -118,7 +118,7 @@ function buildHome() {
       strip.innerHTML = `
         <div class="highlight"><span class="highlight-num">${p.projects.length}</span><span class="highlight-label">Projects</span></div>
         <div class="highlight"><span class="highlight-num">${p.certifications.length}</span><span class="highlight-label">Certifications</span></div>
-        <div class="highlight"><span class="highlight-num">${PORTFOLIO.subjects.length}</span><span class="highlight-label">Subjects documented</span></div>
+        <div class="highlight"><span class="highlight-num">${p.achievements.length}×</span><span class="highlight-label">Dean's Lister, A.Y. 2025–2026</span></div>
         <div class="highlight"><span class="highlight-num">2027</span><span class="highlight-label">Expected graduation</span></div>`;
     }
   }
@@ -242,79 +242,96 @@ function buildResumePage() {
   };
 
   const education = p.education.map(e => `
-    <div class="resume-row">
+    <div class="rs-row">
       <div>
-        <div class="resume-row-title">${e.degree}</div>
-        <div class="resume-row-sub">${e.school}${e.note ? ` &nbsp;|&nbsp; ${e.note}` : ""}</div>
+        <strong>${e.degree}</strong>
+        <div class="rs-sub">${e.school}${e.detail ? ` &nbsp;|&nbsp; ${e.detail}` : ""}</div>
       </div>
-      <div class="resume-row-date">${e.date}</div>
+      <span class="rs-date">${e.period}</span>
     </div>`).join("");
+
+  const achievements = p.achievements.map(a => `<li>${a}</li>`).join("");
 
   const projects = p.projects.map(pr => `
-    <article class="project-card">
-      <header class="project-head">
-        <h3 class="project-title">${pr.title}</h3>
-        <span class="project-context">${pr.context}</span>
-      </header>
-      <ul class="project-bullets">
-        ${pr.bullets.map(b => `<li>${b}</li>`).join("")}
-      </ul>
-      ${pr.tools && pr.tools.length
-        ? `<div class="so-tags">${pr.tools.map(t => `<span class="so-tag">${t}</span>`).join("")}</div>`
-        : ""}
+    <div class="rs-project">
+      <div class="rs-project-head"><strong>${pr.title}</strong> <em>| ${pr.context}</em></div>
+      <ul class="rs-bullets">${pr.bullets.map(b => `<li>${b}</li>`).join("")}</ul>
+      ${pr.tools && pr.tools.length ? `<p class="rs-tools"><span>Tools:</span> ${pr.tools.join(", ")}</p>` : ""}
       ${pr.linkSubject
-        ? `<a href="#" class="project-link" data-go="${pr.linkSubject}">See artifacts in ${subjectTitle(pr.linkSubject)} →</a>`
+        ? `<a href="#" class="rs-link no-print" data-go="${pr.linkSubject}">See artifacts in ${subjectTitle(pr.linkSubject)} →</a>`
         : ""}
-    </article>`).join("");
+    </div>`).join("");
 
   const certs = p.certifications.map(c => `
-    <div class="cert-card">
-      <div class="cert-date">${c.date}</div>
-      <div class="cert-name">${c.name}</div>
-      <div class="cert-issuer">${c.issuer}${c.hours ? ` · ${c.hours}` : ""}</div>
-    </div>`).join("");
+    <li>
+      <span><strong>${c.name}</strong>, ${c.issuer}</span>
+      <span class="rs-date">${c.date}${c.hours ? ` · ${c.hours}` : ""}</span>
+    </li>`).join("");
 
-  const skills = p.skills.map(g => `
-    <div class="skill-group">
-      <div class="skill-group-name">${g.group}</div>
-      <div class="so-tags">${g.items.map(i => `<span class="so-tag">${i}</span>`).join("")}</div>
-    </div>`).join("");
+  const seminars = (p.seminars || []).map(s => `
+    <li>
+      <span><strong>${s.name}</strong></span>
+      <span class="rs-date">${s.date}</span>
+    </li>`).join("");
+
+  const skills = p.skills.map(g => `<p class="rs-skill"><strong>${g.group}:</strong> ${g.items.join(", ")}</p>`).join("");
 
   page.innerHTML = `
-    <div class="subject-header">
-      <p class="subject-code">Resume</p>
-      <h1 class="subject-title">${o.name}</h1>
-      <p class="subject-desc">${o.headline || o.program}</p>
-      <div class="resume-actions">
-        ${o.resume ? `<a class="btn btn-primary" href="${o.resume}" target="_blank" rel="noopener">Download resume (PDF)</a>` : ""}
-        ${o.email ? `<a class="btn btn-ghost" href="mailto:${o.email}">${o.email}</a>` : ""}
+    <div class="resume-page-bg">
+      <div class="resume-toolbar no-print">
+        ${o.resume ? `<a class="btn btn-primary" href="${o.resume}" target="_blank" rel="noopener">Download PDF</a>` : ""}
+        <button class="btn btn-outline" onclick="window.print()">Print</button>
       </div>
-    </div>
-    <div class="subject-content resume-content">
-      <section class="resume-section">
-        <h2 class="resume-heading">Objective</h2>
-        <p class="resume-objective">${p.objective}</p>
-      </section>
 
-      <section class="resume-section">
-        <h2 class="resume-heading">Education</h2>
-        ${education}
-      </section>
+      <article class="resume-sheet">
+        <header class="rs-header">
+          <div class="rs-id">
+            <h1 class="rs-name">${o.name}</h1>
+            <p class="rs-role">Computer Engineering Student</p>
+            <p class="rs-contact">
+              ${o.phone ? `<span><strong>Phone:</strong> ${o.phone}</span>` : ""}
+              ${o.email ? `<span><strong>Email:</strong> <a href="mailto:${o.email}">${o.email}</a></span>` : ""}
+              <span><strong>Portfolio:</strong> <a href="${location.href.split("#")[0]}">${location.host || "e-Portfolio"}</a></span>
+            </p>
+          </div>
+          ${o.photo ? `<img class="rs-photo" src="${o.photo}" alt="Photo of ${o.name}" />` : ""}
+        </header>
 
-      <section class="resume-section">
-        <h2 class="resume-heading">Projects</h2>
-        <div class="project-list">${projects}</div>
-      </section>
+        <section class="rs-section">
+          <h2>Objective</h2>
+          <p>${p.objective}</p>
+        </section>
 
-      <section class="resume-section">
-        <h2 class="resume-heading">Certifications</h2>
-        <div class="cert-grid">${certs}</div>
-      </section>
+        <section class="rs-section">
+          <h2>Education</h2>
+          ${education}
+        </section>
 
-      <section class="resume-section">
-        <h2 class="resume-heading">Technical skills</h2>
-        <div class="skill-groups">${skills}</div>
-      </section>
+        <section class="rs-section">
+          <h2>Achievements</h2>
+          <ul class="rs-bullets">${achievements}</ul>
+        </section>
+
+        <section class="rs-section">
+          <h2>Projects</h2>
+          ${projects}
+        </section>
+
+        <section class="rs-section">
+          <h2>Certifications</h2>
+          <ul class="rs-list">${certs}</ul>
+        </section>
+
+        ${seminars ? `<section class="rs-section">
+          <h2>Seminars and Workshops</h2>
+          <ul class="rs-list">${seminars}</ul>
+        </section>` : ""}
+
+        <section class="rs-section">
+          <h2>Technical Skills</h2>
+          ${skills}
+        </section>
+      </article>
     </div>`;
 
   app.appendChild(page);
