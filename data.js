@@ -16,7 +16,7 @@ const PORTFOLIO = {
     phone: "09615791898",
     resume: "Tristan_Karl_Reyes_Resume.pdf",
     status: "Seeking an OJT opportunity",
-    photo: "assets/img/tristankarl.jpg",
+    photo: "tristankarl.jpg",
   },
 
   subjects: [
